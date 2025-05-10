@@ -4,7 +4,6 @@ certifi==2025.4.26
 cffi==1.17.1
 charset-normalizer==3.4.1
 cryptography==44.0.2
-decouple==0.0.7
 dj-database-url==2.3.0
 Django==5.0.1
 django-allauth==65.7.0
@@ -31,3 +30,4 @@ typing_extensions==4.13.2
 tzdata==2025.2
 uritemplate==4.1.1
 urllib3==2.4.0
+whitenoise
