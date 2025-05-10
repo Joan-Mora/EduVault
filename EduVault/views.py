@@ -18,13 +18,22 @@ from datetime import timedelta
 @login_required
 def perfil(request):
     profile = Profile.objects.get_or_create(autor=request.user)[0]  # ✅ asegura que exista
+
     if request.method == 'POST':
         avatar = request.FILES.get('avatar')
         if avatar:
+            # ✅ Eliminar avatar anterior si existe
+            if profile.avatar:
+                profile.avatar.delete(save=False)
+
+            # ✅ Asignar nuevo avatar
             profile.avatar = avatar
             profile.save()
-            return redirect('perfil')  # o el nombre que tengas en urls.py
+
+            return redirect('perfil')  # redirige a la misma vista
+
     return render(request, 'perfil.html', {'profile': profile})
+
 
 @login_required
 def vista_con_sidebar(request):
