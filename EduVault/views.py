@@ -309,18 +309,18 @@ def confirmar_eliminar(request, archivo_id):
 
 @login_required
 def eliminar_archivo(request, archivo_id):
-    archivo = get_object_or_404(Archivo, id=archivo_id, autor=request.user)  # opcional: filtra solo archivos del usuario
-    if request.method == 'POST':
-        # Eliminar archivo físico
-        if archivo.archivo:
-            if os.path.isfile(archivo.archivo.path):
-                os.remove(archivo.archivo.path)
+    archivo = get_object_or_404(Archivo, id=archivo_id, autor=request.user)
 
-        # Eliminar registro de la base de datos
+    if request.method == 'POST':
+        # Eliminar archivo del almacenamiento (S3)
+        if archivo.archivo:
+            archivo.archivo.delete(save=False)
+
+        # Eliminar el registro de la base de datos
         archivo.delete()
 
         messages.success(request, 'Archivo eliminado correctamente.')
-        return redirect('mis_archivos')  # cambia al nombre de tu vista de lista de archivos
+        return redirect('mis_archivos')
 
     messages.error(request, 'Acción no permitida.')
     return redirect('mis_archivos')
