@@ -22,8 +22,6 @@ pillow==11.2.1
 pycparser==2.22
 PyJWT==2.10.1
 python-decouple==3.8
-python-magic==0.4.27
-python-magic-bin==0.4.14
 PyYAML==6.0.2
 referencing==0.36.2
 requests==2.32.3
