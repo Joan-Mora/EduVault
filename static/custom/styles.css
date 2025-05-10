@@ -1,0 +1,138 @@
+
+/* GENERAL */
+body {  
+
+    background-color: #0d1117; /* Light gray background for the body */
+    color:#e6edf3;
+    font-family: 'Poppins', sans-serif; 
+
+}
+
+
+
+/* LOGIN PAGE */
+.login-logo img {
+    display : block;
+    margin: 20px auto; 
+    max-width: 450px; /* Set the width of the logo image */
+    height: auto; /* Maintain aspect ratio */
+    box-shadow: 0px 4px 15px rgba(255, 215, 0, 0.5); 
+    border-radius: 15px;
+}
+
+.login-box {
+    background-color: #161b22; /* Darker background for the login box */
+    border-radius: 15px; /* Rounded corners for the login box */
+    padding: 30px; /* Padding inside the login box */
+    box-shadow: 0px 4px 30px rgba(255, 215, 0, 0.2);  /* Shadow effect for the login box */
+}
+
+/* DISEÑO TABLAS */
+table.table {
+    background-color: #26282d; /* Darker background for the table */
+    color: #f0f0f0; /* Light gray text color for the table */
+    border-radius: 10px; /* Rounded corners for the table */
+    width: 100%; 
+    margin-top: 20px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2); /* Shadow effect for the table */
+}
+
+table.table thead {
+    background-color: #0d1117; /* Darker background for the table header */
+    color: #FFD700; /* Light gray text color for the table header */
+    font-weight: bold;
+    text-align: left;
+}
+
+table.table thead th {
+    border-bottom: 2px solid #FFD700; /* Padding for table header cells */
+}
+
+/* LINKS */
+
+a {
+    color: #FFD700; /* Gold color for links */
+}
+a:hover {
+    color: #E6C200; /* Tomato color on hover */
+}
+
+/* ANIMACIONES */
+
+.nav-sidebar .nav-link {
+  
+    transition: all 0.3s ease-in-out; /* Smooth transition for background and text color */
+}
+
+.btn, .form-control {
+    transition: all 0.3s ease-in-out; /* Smooth transition for background and text color */
+}
+.card, .main-footer, .navbar, .main-sidebar {
+
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; 
+}
+
+.logout-box {
+    background-color: #161b22; /* Fondo del contenedor */
+    border-radius: 15px;
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0px 4px 30px rgba(255, 215, 0, 0.2); /* Sombra amarilla */
+    margin: 0 auto; /* Centrado horizontal */
+}
+
+.logout-logo img {
+    display: block;
+    margin: 20px auto;
+    max-width: 350px;
+    height: auto;
+    box-shadow: 0px 4px 15px rgba(255, 215, 0, 0.5); /* Sombra amarilla más intensa */
+    border-radius: 15px;
+}
+
+.logout-title {
+    text-align: center;
+    color: #FFD700; /* Amarillo dorado */
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.logout-message {
+    text-align: center;
+    color: #e6edf3; /* Texto claro */
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+/* BOTÓN PRINCIPAL */
+.btn-primary {
+    background-color: #FFD700;
+    border-color: #FFD700;
+    color: #000000; /* Texto negro */
+    font-weight: bold;
+    border-radius: 10px;
+    width: 100%;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+    background-color: #e6c200;
+    border-color: #e6c200;
+    color: #000;
+}
+
+/* FOOTER */
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #e6edf3;
+    font-size: 14px;
+}
+
+.related-widget-wrapper select {
+    background-color: #454d55;
+    background-clip: padding-box;
+}

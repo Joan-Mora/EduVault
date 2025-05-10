@@ -1,0 +1,207 @@
+{% extends "account/base_entrance.html" %}
+{% load i18n %}
+{% load static %}
+{% load allauth account socialaccount %}
+
+{% block head_title %}
+    Iniciar sesión - EduVault
+{% endblock head_title %}
+
+{% block content %}
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: radial-gradient(circle at top left, #1a1a2e, #16213e, #0f3460);
+        color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .custom-login-container {
+        background-color: #ffffff10;
+        backdrop-filter: blur(18px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+        border-radius: 20px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        width: 100%;
+        max-width: 450px;
+        position: relative;
+    }
+
+    .logo-container {
+        margin-bottom: 20px;
+    }
+
+    .logo-img {
+        width: 220px;
+        height: auto;
+        border-radius: 10px;
+    }
+
+    h1 {
+        color: #f1c40f;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .messages {
+        background-color: #fff8dc;
+        border-left: 5px solid #ffa500;
+        padding: 1rem;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+        text-align: left;
+    }
+
+    .field-container {
+        margin-bottom: 1.2rem;
+        text-align: left;
+    }
+
+    label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+        color: #f4f4f4;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        width: 100%;
+        padding: 0.75rem;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+        background-color: #f9f9f9;
+    }
+
+    .login-btn {
+        width: 100%;
+        padding: 0.9rem;
+        background-color: #f1c40f;
+        color: #000;
+        border: none;
+        border-radius: 10px;
+        font-weight: bold;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        margin-top: 1.2rem;
+    }
+
+    .login-btn:hover {
+        background-color: #e0b90c;
+    }
+
+    .google-btn {
+        background-color: #db4437;
+        color: white;
+        padding: 0.8rem;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        cursor: pointer;
+        text-decoration: none;
+        display: block;
+        margin: 1.5rem 0 0.5rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .google-btn:hover {
+        background-color: #b33224;
+    }
+
+    .register-link {
+        margin-top: 1rem;
+        font-size: 0.95rem;
+        color: #ccc;
+    }
+
+    .register-link a {
+        color: #f1c40f;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .register-link a:hover {
+        text-decoration: underline;
+    }
+
+    .note {
+        margin-top: 2rem;
+        font-size: 0.85rem;
+        color: #bbb;
+    }
+
+    .logout-message {
+        position: absolute;
+        top: -60px;
+        width: 100%;
+        background-color: #27ae60;
+        color: white;
+        padding: 0.75rem;
+        font-size: 0.95rem;
+        border-radius: 8px;
+        z-index: 10;
+    }
+
+    label {
+    display: contents;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: #f4f4f4;
+   }
+</style>
+
+{% if request.GET.logout == 'true' %}
+<div class="logout-message">
+    Has cerrado sesión exitosamente.
+</div>
+{% endif %}
+
+<div class="custom-login-container">
+    <div class="logo-container">
+        <img src="{% static 'img/logo_EduVault.png' %}" alt="EduVault Logo" class="logo-img">
+    </div>
+
+    <h1>Iniciar sesión</h1>
+
+    {% if not SOCIALACCOUNT_ONLY %}
+        <div class="register-link">
+            ¿Aún no tienes cuenta?
+            <a href="{{ signup_url }}">Regístrate aquí</a>
+        </div>
+
+        {% url 'account_login' as login_url %}
+        <form method="post" action="{{ login_url }}">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="field-container">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div style="color: #ff6b6b; font-size: 0.85rem;">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            {{ redirect_field }}
+            <button type="submit" class="login-btn">Entrar</button>
+        </form>
+    {% endif %}
+
+    {% if SOCIALACCOUNT_ENABLED %}
+        <a href="{% provider_login_url 'google' %}" class="google-btn">
+            Iniciar sesión con Google
+        </a>
+    {% endif %}
+
+    <div class="note">
+        Usa tu cuenta institucional o credenciales asignadas para ingresar al sistema.
+    </div>
+</div>
+{% endblock content %}

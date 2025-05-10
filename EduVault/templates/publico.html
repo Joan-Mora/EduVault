@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}Archivos Públicos{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #000;
+    }
+    .archivo-card {
+        border-radius: 15px;
+        overflow: hidden;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    .archivo-top {
+        min-height: 120px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .archivo-icon {
+        font-size: 50px;
+    }
+    .archivo-img {
+        width: 100%;
+        height: 120px;
+        object-fit: cover;
+    }
+    .archivo-bottom {
+        background-color: #222;
+        padding: 1rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+    }
+    .archivo-title {
+        color: #ffc107;
+        font-weight: bold;
+        font-size: 1.5rem;
+    }
+    .archivo-meta {
+        font-size: 1rem;
+        color: #ccc;
+    }
+    .archivo-desc {
+        flex-grow: 1;
+        margin: 0.5rem 0;
+        color: #eee;
+        font-size: 0.95rem;
+    }
+    .archivo-actions {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+</style>
+
+<div class="container py-5">
+    <h2 class="text-center mb-4 text-warning display-5">Archivos Públicos</h2>
+
+    <!-- Filtros -->
+    <form method="get" class="row g-3 justify-content-center align-items-end mb-4">
+        <div class="col-md-4">
+            <label for="titulo" class="form-label text-white">Buscar por título</label>
+            <input type="text" name="titulo" id="titulo" value="{{ request.GET.titulo }}" class="form-control bg-dark text-white border-secondary" placeholder="Ej: Álgebra...">
+        </div>
+        <div class="col-md-3">
+            <label for="tipo" class="form-label text-white">Filtrar por tipo</label>
+            <select name="tipo" id="tipo" class="form-select bg-dark text-white border-secondary">
+                <option value="">Todos</option>
+                <option value="pdf" {% if request.GET.tipo == 'pdf' %}selected{% endif %}>PDF</option>
+                <option value="word" {% if request.GET.tipo == 'word' %}selected{% endif %}>Word</option>
+                <option value="excel" {% if request.GET.tipo == 'excel' %}selected{% endif %}>Excel</option>
+                <option value="imagen" {% if request.GET.tipo == 'imagen' %}selected{% endif %}>Imágenes</option>
+                <option value="video" {% if request.GET.tipo == 'video' %}selected{% endif %}>Videos</option>
+                <option value="otro" {% if request.GET.tipo == 'otro' %}selected{% endif %}>Otro</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="etiqueta" class="form-label text-white">Filtrar por etiqueta</label>
+            <select name="etiqueta" id="etiqueta" class="form-select bg-dark text-white border-secondary">
+                <option value="">Todas</option>
+                {% for etiqueta in etiquetas %}
+                    <option value="{{ etiqueta.id }}" {% if request.GET.etiqueta == etiqueta.id|stringformat:"s" %}selected{% endif %}>{{ etiqueta.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+         <!-- Filtro de fecha -->
+        <div class="col-md-3">
+            <label for="fecha" class="form-label text-white">Filtrar por fecha</label>
+            <select name="fecha" id="fecha" class="form-select bg-dark text-white border-secondary">
+                <option value="">Todas</option>
+                <option value="mas_reciente" {% if request.GET.fecha == 'mas_reciente' %}selected{% endif %}>Más reciente</option>
+                <option value="mas_antiguo" {% if request.GET.fecha == 'mas_antiguo' %}selected{% endif %}>Más antiguo</option>
+                <option value="hace_7_dias" {% if request.GET.fecha == 'hace_7_dias' %}selected{% endif %}>Hace 7 días</option>
+                <option value="hace_30_dias" {% if request.GET.fecha == 'hace_30_dias' %}selected{% endif %}>Hace 30 días</option>
+           </select>
+        </div>
+
+        <div class="col-md-2 text-center">
+            <button type="submit" class="btn btn-warning w-100">Filtrar</button>
+        </div>
+    </form>
+
+    {% if archivos %}
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for archivo in archivos %}
+                <div class="col">
+                    <div class="card archivo-card shadow-sm
+                        {% if archivo.archivo.name|endswith:".pdf" %} bg-danger
+                        {% elif archivo.archivo.name|endswith:".jpg" or archivo.archivo.name|endswith:".png" %} bg-primary
+                        {% elif archivo.archivo.name|endswith:".mp4" %} bg-warning
+                        {% elif archivo.archivo.name|endswith:".doc" or archivo.archivo.name|endswith:".docx" %} bg-info
+                        {% elif archivo.archivo.name|endswith:".xlsx" %} bg-success
+                        {% else %} bg-secondary{% endif %}"
+                    >
+                        <div class="archivo-top">
+                            {% if archivo.tipo == 'imagen' %}
+                                <img src="{{ archivo.archivo.url }}" alt="{{ archivo.titulo }}" class="archivo-img">
+                            {% elif archivo.tipo == 'video' %}
+                                <video src="{{ archivo.archivo.url }}" muted class="archivo-img"></video>
+                            {% elif archivo.archivo.name|endswith:".pdf" %}
+                                <i class="bi bi-file-earmark-pdf archivo-icon"></i>
+                                <p>PDF</p>
+                            {% elif archivo.archivo.name|endswith:".doc" or archivo.archivo.name|endswith:".docx" %}
+                                <i class="bi bi-file-earmark-word archivo-icon"></i>
+                                <p>Word</p>
+                            {% elif archivo.archivo.name|endswith:".xlsx" %}
+                                <i class="bi bi-file-earmark-excel archivo-icon"></i>
+                                <p>Excel</p>
+                            {% elif archivo.archivo.name|endswith:".mp4" %}
+                                <i class="bi bi-file-earmark-play archivo-icon"></i>
+                                <p>Video</p>
+                            {% elif archivo.archivo.name|endswith:".jpg" or archivo.archivo.name|endswith:".png" %}
+                                <i class="bi bi-image archivo-icon"></i>
+                                <p>Imagen</p>
+                            {% else %}
+                                <i class="bi bi-file-earmark archivo-icon"></i>
+                                <p>Archivo</p>
+                            {% endif %}
+                        </div>
+
+                        <div class="archivo-bottom">
+                            <div>
+                                <h5 class="archivo-title">{{ archivo.titulo }}</h5>
+                                <p class="archivo-meta">
+                                    Subido por <strong>{{ archivo.autor.username }}</strong><br>
+                                    {{ archivo.fecha_subida|date:"d M Y" }}
+                                </p>
+                                <p class="archivo-desc">{{ archivo.descripcion|truncatechars:100 }}</p>
+                            </div>
+                            <div class="archivo-actions">
+                                <a href="{{ archivo.archivo.url }}" target="_blank" class="btn btn-sm btn-outline-light">Ver</a>
+                                <a href="{{ archivo.archivo.url }}" download class="btn btn-sm btn-outline-light">Descargar</a>
+                                {% if archivo.autor == user or user.is_superuser or user.is_staff %}
+                                    <a href="{% url 'confirmar_eliminar' archivo.id %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="d-flex justify-content-center align-items-center" style="height: 50vh;">
+            <h3 class="text-center text-danger fw-bold display-6">
+                <i class="bi bi-exclamation-triangle-fill"></i> No hay archivos disponibles
+            </h3>
+        </div>
+    {% endif %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+{% endblock %}

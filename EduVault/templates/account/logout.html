@@ -1,0 +1,117 @@
+{% extends "account/base_manage.html" %}
+{% load allauth i18n %}
+{% block head_title %}
+    Cerrar Sesión | EduVault
+{% endblock head_title %}
+
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(135deg, #0a0f2c, #1b1f3b, #000);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .logout-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+        padding: 2rem;
+    }
+
+    .logout-card {
+        background-color: #1e1e2f;
+        border-radius: 16px;
+        padding: 3rem;
+        box-shadow: 0 0 30px rgba(255, 215, 0, 0.15);
+        max-width: 500px;
+        width: 100%;
+        text-align: center;
+        color: #f5f5f5;
+        animation: fadeIn 0.8s ease;
+    }
+
+    .logout-card h1 {
+        color: #FFD700;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .logout-card p {
+        font-size: 1.15rem;
+        margin-bottom: 2.5rem;
+        color: #ccc;
+    }
+
+    .logout-card form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+    }
+
+    .logout-card button {
+        background-color: #FFD700;
+        color: #1a1a1a;
+        font-weight: bold;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .logout-card button:hover {
+        background-color: #e6c200;
+        transform: scale(1.05);
+    }
+
+    .logout-card .cancel-link {
+        color: #f5f5f5;
+        font-size: 0.95rem;
+        text-decoration: underline;
+        transition: color 0.3s ease;
+    }
+
+    .logout-card .cancel-link:hover {
+        color: #FFD700;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+        .logout-card {
+            padding: 2rem;
+        }
+
+        .logout-card h1 {
+            font-size: 2rem;
+        }
+
+        .logout-card p {
+            font-size: 1rem;
+        }
+    }
+</style>
+
+<div class="logout-wrapper">
+    <div class="logout-card">
+        <h1>{% trans "¿Cerrar Sesión?" %}</h1>
+        <p>{% trans "Estás a punto de cerrar tu sesión en EduVault. ¿Estás seguro de continuar?" %}</p>
+
+        {% url 'account_logout' as action_url %}
+        <form method="post" action="{{ action_url }}">
+            {% csrf_token %}
+            {{ redirect_field }}
+            <button type="submit">{% trans "Sí, cerrar sesión" %}</button>
+        </form>
+
+        <a href="{% url 'home' %}" class="cancel-link">{% trans "No, regresar al inicio" %}</a>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio | EduVault{% endblock %}
+
+{% block content %}
+    <div class="container text-white py-4">
+        <h1 class="display-4"><strong>¡Bienvenido {{ user.first_name }}!</strong></h1>
+        <p class="lead"><strong>Has iniciado sesión exitosamente.</strong></p>
+
+        <hr class="bg-light">
+
+        <h2>¿Qué es <strong>EduVault</strong>?</h2>
+        <p>
+            <strong>EduVault</strong> es una plataforma digital desarrollada para estudiantes y docentes de la <em>Corporación Universitaria Minuto de Dios (Uniminuto)</em> que busca centralizar, organizar y gestionar de manera segura los archivos académicos. Desde este espacio puedes almacenar, visualizar, etiquetar y compartir documentos relevantes de tu vida universitaria, tales como apuntes, trabajos, proyectos, investigaciones, y mucho más.
+        </p>
+
+        <h2>Funcionalidades principales</h2>
+        <ul>
+            <li><strong>Subida de archivos:</strong> Sube documentos en diferentes formatos como PDF, Word, Excel, imágenes y videos.</li>
+            <li><strong>Visualización en línea:</strong> Accede y visualiza tus archivos sin necesidad de descargarlos.</li>
+            <li><strong>Organización por etiquetas y materias:</strong> Clasifica tus archivos según materia, tema, autor y etiquetas personalizadas.</li>
+            <li><strong>Archivos públicos y privados:</strong> Decide qué archivos son visibles para la comunidad académica y cuáles permanecen privados.</li>
+            <li><strong>Control de versiones:</strong> Mantén un historial de modificaciones y actualizaciones de tus documentos más importantes.</li>
+            <li><strong>Soporte multiplataforma:</strong> Accede desde tu computador, tablet o dispositivo móvil sin perder funcionalidad.</li>
+        </ul>
+
+        <h2>¿Por qué usar EduVault?</h2>
+        <p>
+            En el mundo académico actual, la organización y acceso a la información es clave. <strong>EduVault</strong> te brinda un espacio centralizado y seguro para almacenar todos tus archivos educativos, evitando pérdidas y facilitando el acceso inmediato a tus recursos desde cualquier lugar. Es más que un almacenamiento: es tu biblioteca personal digital.
+        </p>
+
+        <h2>Misión de Uniminuto</h2>
+        <p>
+            La <em>Corporación Universitaria Minuto de Dios</em> tiene como misión ofrecer educación superior de alta calidad y accesible a todas las personas, especialmente a quienes tienen menos oportunidades, formando profesionales integrales con sentido social y compromiso ético, capaces de transformar su entorno y contribuir al desarrollo sostenible.
+        </p>
+
+        <h2>Visión de Uniminuto</h2>
+        <p>
+            Ser reconocida como una institución líder en educación superior en Colombia y América Latina, destacada por su impacto social, su modelo educativo innovador y su compromiso con la equidad, la inclusión y el desarrollo integral de las comunidades.
+        </p>
+
+        <h2>Posibilidades dentro de la plataforma</h2>
+        <p>
+            Como usuario registrado, podrás no solo gestionar tus propios archivos, sino también colaborar con otros miembros de la comunidad académica, acceder a recursos públicos subidos por otros estudiantes o docentes, y mantener siempre un respaldo seguro de tu trayectoria académica. EduVault también está en constante crecimiento, con nuevas funcionalidades previstas como integración con sistemas bibliográficos, notificaciones de vencimientos y soporte para proyectos colaborativos.
+        </p>
+
+        <div class="mt-4">
+            <a href="{% url 'perfil' %}" class="btn btn-primary me-2"><i class="fas fa-user"></i> Ver Perfil</a>
+            <a href="{% url 'subir_archivo' %}" class="btn btn-success"><i class="fas fa-upload"></i> Subir un Archivo</a>
+        </div>
+    </div>
+{% endblock %}

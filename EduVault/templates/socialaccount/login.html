@@ -1,0 +1,94 @@
+{% extends "socialaccount/base_entrance.html" %}
+{% load i18n %}
+{% load allauth %}
+
+{% block head_title %}
+    {% trans "Iniciar Sesión" %}
+{% endblock head_title %}
+
+{% block content %}
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle at top left, #191b31, #132a4e, #13274a);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .glass-card {
+            backdrop-filter: blur(20px);
+            background: rgb(35 48 76);
+            border-radius: 20px;
+            padding: 3rem;
+            width: 90%;
+            max-width: 550px;
+            box-shadow: 0 8px 24px rgb(18 22 40), 0 4px 12px rgb(255 255 255 / 10%);
+            color: #FFD700;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.15);
+        }
+
+        .glass-card h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .glass-card p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: #f0f0f0;
+        }
+
+        .glass-card button {
+            background-color: #FFD700;
+            color: #000;
+            padding: 0.9rem 2.2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px #FFD700;
+        }
+
+        .glass-card button:hover {
+            background-color: #e6c200;
+            box-shadow: 0 0 16px #FFD700, 0 0 32px #FFD700;
+            transform: scale(1.05);
+        }
+    </style>
+
+    <div class="glass-card">
+        {% if process == "connect" %}
+            {% element h1 %}
+                {% blocktrans with provider.name as provider %}Conectar con {{ provider }}{% endblocktrans %}
+            {% endelement %}
+            {% element p %}
+                {% blocktrans with provider.name as provider %}Estás a punto de conectar una nueva cuenta de {{ provider }}.{% endblocktrans %}
+            {% endelement %}
+        {% else %}
+            {% element h1 %}
+                {% blocktrans with provider.name as provider %}Iniciar sesión con {{ provider }}{% endblocktrans %}
+            {% endelement %}
+            {% element p %}
+                {% blocktrans with provider.name as provider %}Estás a punto de iniciar sesión usando tu cuenta de {{ provider }}.{% endblocktrans %}
+            {% endelement %}
+        {% endif %}
+
+        {% element form method="post" no_visible_fields=True %}
+            {% slot actions %}
+                {% csrf_token %}
+                {% element button type="submit" %}
+                    {% trans "Continuar" %}
+                {% endelement %}
+            {% endslot %}
+        {% endelement %}
+    </div>
+{% endblock content %}

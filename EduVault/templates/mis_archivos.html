@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}Mis Archivos{% endblock %}
+
+{% block content %}
+<style>
+  body {
+    background-color: #000;
+  }
+  .container-mis-archivos {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  .page-header {
+    color: #ffc107;
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 2px #000;
+  }
+  .filters-card {
+    background: rgba(30, 30, 30, 0.85);
+    border: 1px solid #444;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  }
+  .filters-card h3 {
+    color: #ffd54f;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  .filters-card .form-control,
+  .filters-card .form-select {
+    background: #111;
+    color: #eee;
+    border: 1px solid #555;
+    border-radius: 6px;
+  }
+  .filters-card .form-control:focus,
+  .filters-card .form-select:focus {
+    box-shadow: 0 0 8px #ffc107;
+    border-color: #ffc107;
+  }
+  .filters-card .btn-filter {
+    background: linear-gradient(135deg, #ffc107, #ff8f00);
+    border: none;
+    color: #000;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+  }
+  .archivo-card {
+    border-radius: 12px;
+    overflow: hidden;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: transform 0.2s;
+  }
+  .archivo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+  }
+  .archivo-top {
+    min-height: 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .archivo-icon {
+    font-size: 48px;
+  }
+  .archivo-img,
+  .archivo-video {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+  }
+  .archivo-bottom {
+    background: #1a1a1a;
+    padding: 1rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .archivo-title {
+    color: #ffd54f;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .archivo-meta {
+    font-size: 0.85rem;
+    color: #bbb;
+    margin-bottom: 0.75rem;
+  }
+  .archivo-desc {
+    flex-grow: 1;
+    color: #ddd;
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+  }
+  .archivo-actions .btn {
+    width: 32%;
+    font-size: 0.8rem;
+  }
+  .no-files {
+    color: #fff;
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 4rem;
+  }
+</style>
+
+<div class="container container-mis-archivos">
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="page-header">Mis Archivos</h1>
+    <a href="{% url 'subir_archivo' %}" class="btn btn-warning btn-lg">+ Subir Archivo</a>
+  </div>
+
+  <!-- Filtros -->
+<div class="filters-card">
+  <form method="get" class="row g-3 align-items-end">
+    <div class="col-md-4">
+      <label for="titulo" class="form-label text-light">Título</label>
+      <div class="input-group">
+        <span class="input-group-text bg-dark border-secondary">
+          <i class="bi bi-search text-warning"></i>
+        </span>
+        <input type="text" name="titulo" id="titulo" value="{{ request.GET.titulo }}" class="form-control" placeholder="Buscar...">
+      </div>
+    </div>
+    <div class="col-md-3">
+      <label for="tipo" class="form-label text-white">Tipo</label>
+      <select name="tipo" id="tipo" class="form-select bg-dark text-white border-secondary">
+          <option value="">Todos</option>
+          <option value="pdf" {% if request.GET.tipo == 'pdf' %}selected{% endif %}>PDF</option>
+          <option value="word" {% if request.GET.tipo == 'word' %}selected{% endif %}>Word</option>
+          <option value="excel" {% if request.GET.tipo == 'excel' %}selected{% endif %}>Excel</option>
+          <option value="imagen" {% if request.GET.tipo == 'imagen' %}selected{% endif %}>Imágenes</option>
+          <option value="video" {% if request.GET.tipo == 'video' %}selected{% endif %}>Videos</option>
+          <option value="otro" {% if request.GET.tipo == 'otro' %}selected{% endif %}>Otro</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label for="etiqueta" class="form-label text-light">Etiqueta</label>
+      <select name="etiqueta" id="etiqueta" class="form-select">
+        <option value="">Todas</option>
+        {% for etiqueta in etiquetas %}
+          <option value="{{ etiqueta.id }}" {% if request.GET.etiqueta == etiqueta.id|stringformat:"s" %}selected{% endif %}>{{ etiqueta.nombre }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-3">
+      <label for="fecha" class="form-label text-white">Filtrar por fecha</label>
+      <select name="fecha" id="fecha" class="form-select bg-dark text-white border-secondary">
+          <option value="">Todas</option>
+          <option value="mas_reciente" {% if request.GET.fecha == 'mas_reciente' %}selected{% endif %}>Más reciente</option>
+          <option value="mas_antiguo" {% if request.GET.fecha == 'mas_antiguo' %}selected{% endif %}>Más antiguo</option>
+          <option value="hace_7_dias" {% if request.GET.fecha == 'hace_7_dias' %}selected{% endif %}>Hace 7 días</option>
+          <option value="hace_30_dias" {% if request.GET.fecha == 'hace_30_dias' %}selected{% endif %}>Hace 30 días</option>
+     </select>
+  </div>
+    <div class="col-md-2 text-center">
+      <button type="submit" class="btn btn-filter w-100">Filtrar</button>
+    </div>
+  </form>
+</div>
+       
+  {% if archivos_usuario %}
+  <!-- Conteo -->
+  <div class="mb-3 text-end text-light">
+    Archivos encontrados: <strong>{{ archivos_usuario|length }}</strong>
+  </div>
+  <!-- Grid de archivos -->
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+
+      {% for archivo in archivos %}
+        {% if archivo.autor == user %}
+          <div class="col">
+            <div class="card archivo-card 
+                {% if archivo.archivo.name|endswith:".pdf" %} bg-danger
+                {% elif archivo.archivo.name|endswith:".jpg" or archivo.archivo.name|endswith:".png" %} bg-primary
+                {% elif archivo.archivo.name|endswith:".mp4" %} bg-warning
+                {% elif archivo.archivo.name|endswith:".doc" or archivo.archivo.name|endswith:".docx" %} bg-info
+                {% elif archivo.archivo.name|endswith:".xlsx" %} bg-success
+                {% else %} bg-secondary{% endif %} shadow-sm">
+              
+              <div class="archivo-top">
+                {% if archivo.tipo == 'imagen' %}
+                  <img src="{{ archivo.archivo.url }}" class="archivo-img" alt="{{ archivo.titulo }}">
+                {% elif archivo.tipo == 'video' %}
+                  <video src="{{ archivo.archivo.url }}" class="archivo-video" muted></video>
+                {% elif archivo.archivo.name|endswith:".pdf" %}
+                  <i class="bi bi-file-earmark-pdf archivo-icon"></i>
+                {% elif archivo.archivo.name|endswith:".doc" or archivo.archivo.name|endswith:".docx" %}
+                  <i class="bi bi-file-earmark-word archivo-icon"></i>
+                {% elif archivo.archivo.name|endswith:".xlsx" %}
+                  <i class="bi bi-file-earmark-excel archivo-icon"></i>
+                {% else %}
+                  <i class="bi bi-file-earmark archivo-icon"></i>
+                {% endif %}
+              </div>
+              
+              <div class="archivo-bottom">
+                <div>
+                  <div class="archivo-title">{{ archivo.titulo }}</div>
+                  <div class="archivo-meta">
+                    {{ archivo.materia.nombre }} &middot; {{ archivo.fecha_subida|date:"d M Y" }}
+                  </div>
+                  <div class="archivo-desc">{{ archivo.descripcion|truncatechars:100 }}</div>
+                </div>
+                <div class="archivo-actions">
+                  <a href="{{ archivo.archivo.url }}" download class="btn btn-outline-light">Descargar</a>
+                  <a href="{{ archivo.archivo.url }}" target="_blank" class="btn btn-outline-light">Ver</a>
+                  <a href="{% url 'confirmar_eliminar' archivo.id %}" class="btn btn-outline-danger">Eliminar</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="no-files">
+      <i class="bi bi-exclamation-circle-fill"></i>
+      <div>No Has Subido Ningún Archivo</div>
+    </div>
+  {% endif %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+{% endblock %}

@@ -1,0 +1,274 @@
+{% extends 'base.html' %}
+
+{% block title %}Matriz Gauss-Jordan - EduVault{% endblock %}
+
+{% block content %}
+<style>
+    :root {
+        --bg-color: #1e1e1e;
+        --text-color: #e0e0e0;
+        --primary-color: #4e88ff;
+        --secondary-color: #4caf50;
+        --highlight-color: #ffc107;
+        --border-color: #333;
+        --input-bg: #2a2a2a;
+    }
+
+    body.light-mode {
+        --bg-color: #f8f9fa;
+        --text-color: #333;
+        --primary-color: #007bff;
+        --secondary-color: #28a745;
+        --highlight-color: #ffc107;
+        --border-color: #ddd;
+        --input-bg: #fff;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        margin: 0;
+        padding: 20px;
+        text-align: center;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    h1, h2 {
+        color: var(--text-color);
+    }
+
+    form {
+        margin: 20px auto;
+        max-width: 600px;
+        background: var(--input-bg);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    input[type="number"] {
+        width: 60px;
+        padding: 5px;
+        margin-left: 10px;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        background: var(--input-bg);
+        color: var(--text-color);
+    }
+
+    .button-container {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s, transform 0.2s;
+        color: white;
+    }
+    
+    .fa-bars {
+        position: absolute;
+        top: 20px;
+        left: 320px;
+       
+    }
+
+    button[name="generar_matriz_aleatoria"] {
+        background-color: var(--primary-color);
+    }
+
+    button[name="ingresar_matriz_manualmente"] {
+        background-color: var(--secondary-color);
+    }
+
+    button.toggle-dark {
+        background-color: #555;
+        color: white;
+        margin-bottom: 15px;
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+        opacity: 0.9;
+    }
+
+    table {
+        border-collapse: collapse;
+        margin: 20px auto;
+        width: auto;
+        background: var(--input-bg);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    td {
+        border: 1px solid var(--border-color);
+        padding: 10px;
+        text-align: center;
+        min-width: 50px;
+        color: var(--text-color);
+    }
+
+    input[type="number"][step="any"] {
+        width: 70px;
+    }
+
+    .error-message {
+        color: red;
+        font-weight: bold;
+        margin-top: 15px;
+    }
+
+    h1, h2 {
+        color: #f1c40f;
+    }
+
+    .steps-container {
+        display: flex;
+        overflow-x: auto;
+        padding: 15px 0;
+        gap: 15px;
+        margin: 20px auto;
+        max-width: 95%;
+    }
+
+    .step-card {
+        flex: 0 0 auto;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 15px;
+        min-width: 250px;
+        max-width: 300px;
+        text-align: left;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        color: var(--text-color);
+    }
+
+    .step-card.light-mode {
+        background: #ffffff;
+        color: #333;
+    }
+
+    .steps-container::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .steps-container::-webkit-scrollbar-thumb {
+        background-color: var(--highlight-color);
+        border-radius: 4px;
+    }
+
+    .steps-container::-webkit-scrollbar-track {
+        background: transparent;
+    }
+</style>
+
+<h1>Solución de la matriz con Gauss-Jordan</h1>
+
+<button class="toggle-dark" onclick="toggleDarkMode()">Cambiar Modo Claro/Oscuro</button>
+
+{% if error_message %}
+  <div class="error-message">{{ error_message }}</div>
+{% endif %}
+
+<form method="post">
+  {% csrf_token %}
+  <label for="tamano">Tamaño de la matriz:</label>
+  <input type="number" id="tamano" name="tamano" min="2" value="{{ tamano }}">
+  <div class="button-container">
+    <button type="submit" name="generar_matriz_aleatoria">Generar Matriz Aleatoria</button>
+    <button type="submit" name="ingresar_matriz_manualmente">Ingresar Matriz Manualmente</button>
+  </div>
+</form>
+
+{% if ingresando %}
+  <h2>Ingresa los valores de la matriz aumentada</h2>
+  <form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="tamano" value="{{ tamano }}">
+    <table>
+      {% for i in rango_tamano %}
+        <tr>
+          {% for j in rango_tamano_plus %}
+            <td><input type="number" step="any" name="valor_{{i}}_{{j}}" required></td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </table>
+    <button type="submit" style="background-color: var(--highlight-color); color: black;">Resolver</button>
+  </form>
+{% endif %}
+
+{% if matriz and not ingresando %}
+  <h2>Matriz Aumentada Original</h2>
+  <table>
+    {% for fila in matriz %}
+      <tr>
+        {% for valor in fila %}
+          <td>{{ valor }}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </table>
+
+  <h2>Matriz Final con Soluciones</h2>
+  <table>
+    {% for fila in matriz_final %}
+      <tr>
+        {% for valor in fila %}
+          <td>{{ valor|floatformat:2 }}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </table>
+
+  <h2>Solución</h2>
+  <div class="steps-container">
+    {% for valor in solucion %}
+      <div class="step-card">
+        {{ valor|floatformat:2 }}
+      </div>
+    {% endfor %}
+  </div>
+
+  <h2>Pasos del Algoritmo</h2>
+  <div class="steps-container">
+    {% for paso in pasos %}
+      <div class="step-card">
+        <strong>Paso {{ forloop.counter }}:</strong><br>
+        {{ paso }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<script>
+  function toggleDarkMode() {
+      document.body.classList.toggle('light-mode');
+      const cards = document.querySelectorAll('.step-card');
+      cards.forEach(card => {
+          card.classList.toggle('light-mode');
+      });
+
+      const btn = document.querySelector('.toggle-dark');
+      if (document.body.classList.contains('light-mode')) {
+          btn.textContent = "Cambiar a Modo Oscuro";
+      } else {
+          btn.textContent = "Cambiar a Modo Claro";
+      }
+  }
+</script>
+
+{% endblock %}

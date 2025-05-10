@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ScannerApp API Docs</title>
+    <style>
+
+      .dhTbPR {
+       text-overflow: ellipsis;
+       border-radius: 4px;
+       overflow: hidden;
+       background: rgb(80, 80, 80) !important;
+       padding: 8px 9.6px;
+       margin: 20px 0px;
+       width: 100%;
+      }   
+      
+      .hNlDMA {
+       border-bottom: 1px solid rgba(38, 50, 56, 0.3);
+       margin: 1em 0px;
+       color: rgb(255, 255, 255) !important;
+       font-weight: normal;
+       text-transform: uppercase;
+       font-size: 0.929em;
+       line-height: 20px;
+      }   
+     
+      .Wnlbg .dropdown-select {
+       position: absolute;
+       top: 0px;
+       left: 0px;
+       width: 100%;
+       height: 100%;
+       opacity: 0;
+       border: none;
+       appearance: none;
+       cursor: pointer;
+       color: rgb(0, 0, 0) !important;
+       line-height: inherit;
+       font-family: inherit;
+      }
+
+      .fdMblT > ul > li.react-tabs__tab--selected {
+       color: rgb(29, 129, 39) !important;
+       background: #20262e !important;
+      }
+
+      body {
+        background-color: #121212; /* Fondo oscuro */
+        color: white; /* Color del texto */
+      }
+
+      .redoc-container {
+        height: 100vh;
+      }
+
+      /* Personaliza los enlaces de la barra lateral */
+      .sidebar a {
+        color: white !important; /* Color blanco para los enlaces */
+        text-decoration: none; /* Elimina el subrayado */
+        transition: color 0.3s ease, background-color 0.3s ease; /* Transición suave para los colores */
+      }
+
+      /* Color de los enlaces cuando el cursor pasa sobre ellos */
+      .sidebar a:hover {
+        color: #00bcd4 !important; /* Color azul */
+        background-color: #333333 !important; /* Fondo oscuro para el hover */
+      }
+
+      /* Asegura que el color de los enlaces en el foco o al hacer clic también sea visible */
+      .sidebar a:focus, .sidebar a:active {
+        color: #00bcd4 !important; /* Azul cuando se hace clic */
+        background-color: #333333 !important; /* Fondo oscuro */
+      }
+
+     
+       
+    </style>
+  </head>
+  <body>
+    <div class="redoc-container"></div>
+    <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
+    <script>
+      Redoc.init('/schema/', {
+        scrollYOffset: 50,
+        hideDownloadButton: false,
+        theme: {
+          colors: {
+            primary: {
+              main: '#00bcd4' /* Azul como color principal */
+            },
+            text: {
+              primary: '#ffffff', /* Color blanco para el texto */
+              secondary: '#cccccc' /* Color gris para el texto secundario */
+            },
+            background: {
+              default: '#121212' /* Fondo oscuro */
+            }
+          },
+          sidebar: {
+            backgroundColor: '#1e1e1e', /* Fondo oscuro para la barra lateral */
+            textColor: '#ffffff', /* Texto blanco en la barra lateral */
+            linkColor: '#ffffff', /* Enlaces blancos por defecto */
+            linkHoverColor: '#00bcd4' /* Enlaces azules al hacer hover */
+          }
+        }
+      }, document.querySelector('.redoc-container'));
+    </script>
+  </body>
+</html>
+

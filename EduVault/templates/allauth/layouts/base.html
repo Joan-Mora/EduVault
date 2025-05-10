@@ -1,0 +1,72 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block head_title %}EduVault{% endblock head_title %}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'img/icono_EduVault.png' %}">
+
+    <style>
+        .header {
+            background-color: #1a1a1a;
+            color: #FFD700;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.7rem;
+            letter-spacing: 1px;
+        }
+        .content {
+            padding: 2rem;
+        }
+        .messages {
+            position: absolute;
+            top: 10px;
+            width: 100%;
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 8px;
+            display: none;
+            z-index: 10;
+        }
+        .messages ul {
+            margin: 0;
+            padding-left: 1rem;
+        }
+    </style>
+    {% block extra_head %}
+    {% endblock extra_head %}
+</head>
+<body>
+    {% if messages %}
+        <div class="messages">
+            <strong>{% trans "Mensajes:" %}</strong>
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <div class="content">
+        {% block body %}
+            {% block content %}
+            {% endblock content %}
+        {% endblock body %}
+    </div>
+
+    {% block extra_body %}
+    {% endblock extra_body %}
+</body>
+</html>

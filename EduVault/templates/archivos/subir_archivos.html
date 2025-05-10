@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Mis Archivos</h2>
+  <ul>
+    {% for archivo in archivos %}
+      <li>
+        <h3>{{ archivo.titulo }}</h3>
+        <p>{{ archivo.descripcion }}</p>
+
+        <!-- Vista previa del archivo -->
+        {% if archivo.tipo == 'pdf' %}
+          <embed src="{{ archivo.archivo.url }}" width="300" height="200" type="application/pdf">
+        {% elif archivo.tipo == 'imagen' %}
+          <img src="{{ archivo.archivo.url }}" alt="{{ archivo.titulo }}" width="300" height="200">
+        {% elif archivo.tipo == 'video' %}
+          <video width="300" height="200" controls>
+            <source src="{{ archivo.archivo.url }}" type="video/mp4">
+            Tu navegador no soporta el video.
+          </video>
+        {% elif archivo.tipo == 'word' %}
+          <p>Este archivo es un documento de Word. No se puede mostrar una vista previa aquí.</p>
+        {% elif archivo.tipo == 'excel' %}
+          <p>Este archivo es una hoja de Excel. No se puede mostrar una vista previa aquí.</p>
+        {% else %}
+          <p>Este archivo tiene un tipo no soportado para vista previa.</p>
+        {% endif %}
+        
+        <!-- Enlace al archivo -->
+        <a href="{{ archivo.archivo.url }}" target="_blank">Ver archivo completo</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
