@@ -14,6 +14,12 @@ from fractions import Fraction
 from .models import Profile
 from django.utils import timezone
 from datetime import timedelta
+from django.http import FileResponse
+
+def descargar_archivo(request, archivo_id):
+    archivo = get_object_or_404(Archivo, pk=archivo_id)
+    response = FileResponse(archivo.archivo.open(), as_attachment=True, filename=archivo.archivo.name.split('/')[-1])
+    return response
 
 @login_required
 def perfil(request):

@@ -219,7 +219,7 @@
                   <div class="archivo-desc">{{ archivo.descripcion|truncatechars:100 }}</div>
                 </div>
                 <div class="archivo-actions">
-                  <a href="{{ archivo.archivo.url }}" download class="btn btn-outline-light">Descargar</a>
+                  <a href="{% url 'descargar_archivo' archivo.id %}" class="btn btn-sm btn-outline-light">Descargar</a>
                   <a href="{{ archivo.archivo.url }}" target="_blank" class="btn btn-outline-light">Ver</a>
                   <a href="{% url 'confirmar_eliminar' archivo.id %}" class="btn btn-outline-danger">Eliminar</a>
                 </div>

@@ -7,46 +7,89 @@
     Iniciar sesión - EduVault
 {% endblock head_title %}
 
+{% block extra_head %}
+    <!-- Meta para viewport responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock extra_head %}
+
 {% block content %}
 <style>
+    /* 1) Reset box-sizing */
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+
     body {
         margin: 0;
         font-family: 'Segoe UI', sans-serif;
         background: radial-gradient(circle at top left, #1a1a2e, #16213e, #0f3460);
         color: #f4f4f4;
+
         display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
+        justify-content: center;   /* solo horizontal */
+        /* para el espacio vertical usaremos margin-block en la card */
+        min-height: 100vh;
+        padding-block: 0rem;
     }
 
     .custom-login-container {
-        background-color: #ffffff10;
+        background-color: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(18px);
         border: 1px solid rgba(255, 255, 255, 0.08);
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
         border-radius: 20px;
-        padding: 3rem 2.5rem;
+
+        /* 2) Width fluido entre 300px y 450px, hasta 90% del viewport */
+        width: clamp(300px, 90%, 450px);
+
+        /* 3) Espacio vertical relativo */
+        margin-block: 10vh;
+
+        padding: 1rem;
         text-align: center;
-        width: 100%;
-        max-width: 450px;
         position: relative;
     }
 
+    /* Tablet / laptops (anchos medios) */
+    @media (min-width: 768px) and (max-width: 1024px) {
+      .custom-login-container {
+        padding: 2.5rem;
+        margin-block: 8vh;
+      }
+    }
+
+    /* Móviles muy estrechos */
+    @media (max-width: 480px) {
+      .custom-login-container {
+        padding: 1rem;
+        margin-block: 0vh;
+        margin-left: 1.5vh;
+      }
+    }
+    
+      /* Escritorio grande / PC y laptops anchas (>1024px) */
+    @media (min-width: 1025px) {
+      .custom-login-container {
+        margin-right: 28vh;
+        width: clamp(700px, 50%, 500px);
+        margin-block: 10vh;
+      
+     }
+    } 
     .logo-container {
-        margin-bottom: 20px;
+        margin-bottom: 1.5rem;
     }
 
     .logo-img {
-        width: 220px;
+        width: 180px;
         height: auto;
         border-radius: 10px;
     }
 
     h1 {
         color: #f1c40f;
-        font-size: 2rem;
-        margin-bottom: 1.5rem;
+        font-size: clamp(1.5rem, 4vw, 2rem);
+        margin-bottom: 1.2rem;
     }
 
     .messages {
@@ -59,7 +102,7 @@
     }
 
     .field-container {
-        margin-bottom: 1.2rem;
+        margin-bottom: 1rem;
         text-align: left;
     }
 
@@ -149,13 +192,6 @@
         border-radius: 8px;
         z-index: 10;
     }
-
-    label {
-    display: contents;
-    font-weight: 600;
-    margin-bottom: 0.3rem;
-    color: #f4f4f4;
-   }
 </style>
 
 {% if request.GET.logout == 'true' %}

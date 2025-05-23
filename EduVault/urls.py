@@ -26,6 +26,7 @@ urlpatterns = [
     path ('logout/', RedirectView.as_view(url=('accounts/logout/'))),
     path('eliminar/<int:archivo_id>/', views.eliminar_archivo, name='eliminar_archivo'),
     path('confirmar_eliminar/<int:archivo_id>/', views.confirmar_eliminar, name='confirmar_eliminar'),
+    path('descargar/<int:archivo_id>/', views.descargar_archivo, name='descargar_archivo'),
 ]
 
 if settings.DEBUG:

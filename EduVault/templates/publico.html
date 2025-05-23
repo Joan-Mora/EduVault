@@ -163,7 +163,7 @@
                             </div>
                             <div class="archivo-actions">
                                 <a href="{{ archivo.archivo.url }}" target="_blank" class="btn btn-sm btn-outline-light">Ver</a>
-                                <a href="{{ archivo.archivo.url }}" download class="btn btn-sm btn-outline-light">Descargar</a>
+                                <a href="{% url 'descargar_archivo' archivo.id %}" class="btn btn-sm btn-outline-light">Descargar</a>
                                 {% if archivo.autor == user or user.is_superuser or user.is_staff %}
                                     <a href="{% url 'confirmar_eliminar' archivo.id %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
                                 {% endif %}

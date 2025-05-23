@@ -232,7 +232,7 @@
       <img src="{% static 'img/logo_EduVault.png' %}" alt="Logo" class="logo-img" style="width: 230px; border-radius: 12px;">
       <div style="height: 20px;"></div>
       {% if profile.avatar %}
-        <img src="{{ profile.avatar.url }}" alt="Avatar" class="avatar-img" style="width: 80px; border-radius: 50%;">
+        <img src="{{ profile.avatar.url }}" alt="Avatar" class="rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
       {% else %}
         <img src="{% static 'default.png' %}" alt="Avatar Predeterminado" class="avatar-img" style="width: 80px; border-radius: 50%;">
       {% endif %}
