@@ -1,0 +1,11 @@
+# Variables de entorno
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+
+# Archivos subidos por los usuarios
+media/

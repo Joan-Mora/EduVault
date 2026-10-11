@@ -245,8 +245,8 @@ SOCIALACCOUNT_PROVIDERS = {
     'google': {
 
         'APP': {
-            'client_id': 'REMOVED.apps.googleusercontent.com',
-            'secret': 'REMOVED-GOOGLE-SECRET',
+            'client_id': config('GOOGLE_CLIENT_ID', default=''),
+            'secret': config('GOOGLE_CLIENT_SECRET', default=''),
             'key': ''
         },
 

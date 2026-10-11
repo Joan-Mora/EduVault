@@ -1,0 +1,349 @@
+[
+  {
+    "model": "EduVault.materia",
+    "pk": 1,
+    "fields": {
+      "nombre": "Algebra",
+      "descripcion": "Estudio de las estructuras y operaciones con n meros, variables y expresiones algebraicas."
+    }
+  },
+  {
+    "model": "EduVault.materia",
+    "pk": 2,
+    "fields": {
+      "nombre": "Matematicas",
+      "descripcion": "Ciencia que estudia las propiedades y relaciones de los n meros, las figuras y los patrones."
+    }
+  },
+  {
+    "model": "EduVault.materia",
+    "pk": 3,
+    "fields": {
+      "nombre": "Programacion",
+      "descripcion": "Proceso de dise ar y desarrollar software mediante la creaci n de c digo en lenguajes de programaci n."
+    }
+  },
+  {
+    "model": "EduVault.materia",
+    "pk": 4,
+    "fields": {
+      "nombre": "Literatura",
+      "descripcion": "An lisis y apreciaci n de obras literarias, sus g neros y sus contextos hist ricos y culturales."
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 1,
+    "fields": {
+      "nombre": "Matematicas"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 2,
+    "fields": {
+      "nombre": "Programacion"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 3,
+    "fields": {
+      "nombre": "Algebra"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 4,
+    "fields": {
+      "nombre": "Espa ol"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 5,
+    "fields": {
+      "nombre": "Ingles"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 6,
+    "fields": {
+      "nombre": "Examen"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 7,
+    "fields": {
+      "nombre": "Tarea"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 8,
+    "fields": {
+      "nombre": "Proyecto"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 9,
+    "fields": {
+      "nombre": "Ejercicios"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 10,
+    "fields": {
+      "nombre": "Teoria"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 11,
+    "fields": {
+      "nombre": "Notas"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 12,
+    "fields": {
+      "nombre": "Investigacion"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 13,
+    "fields": {
+      "nombre": "Documentos"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 14,
+    "fields": {
+      "nombre": "Guias"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 15,
+    "fields": {
+      "nombre": "Revision"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 16,
+    "fields": {
+      "nombre": "Borrador"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 17,
+    "fields": {
+      "nombre": "Final"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 18,
+    "fields": {
+      "nombre": "Urgente"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 19,
+    "fields": {
+      "nombre": "Confidencial"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 20,
+    "fields": {
+      "nombre": "Imagen"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 21,
+    "fields": {
+      "nombre": "Video"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 22,
+    "fields": {
+      "nombre": "Audio"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 23,
+    "fields": {
+      "nombre": "Presentacion"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 24,
+    "fields": {
+      "nombre": "Practica"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 25,
+    "fields": {
+      "nombre": "Resumen"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 26,
+    "fields": {
+      "nombre": "Reporte"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 27,
+    "fields": {
+      "nombre": "2025-I"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 28,
+    "fields": {
+      "nombre": "2025-II"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 29,
+    "fields": {
+      "nombre": "2025-III"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 30,
+    "fields": {
+      "nombre": "Novedad"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 31,
+    "fields": {
+      "nombre": "Tendencia"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 32,
+    "fields": {
+      "nombre": "Colaboracion"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 33,
+    "fields": {
+      "nombre": "Grupo"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 34,
+    "fields": {
+      "nombre": "Revision"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 35,
+    "fields": {
+      "nombre": "Pendiente"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 36,
+    "fields": {
+      "nombre": "Finalizado"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 37,
+    "fields": {
+      "nombre": "Conferencia"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 38,
+    "fields": {
+      "nombre": "Seminario"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 39,
+    "fields": {
+      "nombre": "Documentacion"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 40,
+    "fields": {
+      "nombre": "Manual"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 41,
+    "fields": {
+      "nombre": "Guia de Estudio"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 42,
+    "fields": {
+      "nombre": "Evaluacion"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 43,
+    "fields": {
+      "nombre": "Certificacion"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 44,
+    "fields": {
+      "nombre": "Respaldo"
+    }
+  },
+  {
+    "model": "EduVault.etiqueta",
+    "pk": 45,
+    "fields": {
+      "nombre": "Archivo"
+    }
+  }
+]
